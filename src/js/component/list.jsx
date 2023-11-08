@@ -1,36 +1,52 @@
 import React, {useEffect, useState} from "react";
-import { Stack } from "react-bootstrap";
+import { ListGroupItem } from "react-bootstrap";
+
 import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function List () {
   const[todo, setTodo] = useState('');
   const[todos, setTodos] = useState([]);
 
   const hanldeChange = (evt) => setTodo(evt.target.value)
+  
+  let items = todos.length;
+    
+  // Add item
   const handleClick = () => {
-        setTodos(prev => [...prev, todo])
-        setTodo('')
-        }
-
-        const handleFilter = (idx) => () => {
-            setTodos(todos.filter((_, todoIdx) => todoIdx !== idx))
-            }
+    if(input.value === ''){
+      alert("Missing Data")
+    }else {
+    setTodos(prev => [...prev, todo])
+    setTodo('')
+    }
+    }
+        
+    // Delete action & alert message for delete task
+      const handleFilter = (idx) => () => {
+      alert ("Did you complete this Task?")
+     setTodos(todos.filter((_, todoIdx) => todoIdx !== idx))
+   }
+            
+           
 
   return(
-      <div className="text-center">
-            <h1>To Do List!</h1>
-            <input onChange={hanldeChange} value={todo} />
-            <Button variant="primary" onClick={handleClick}>Add</Button>
-            <Stack>
-              <div className="p-2">
-                {todos.map((data, idx) => <li key={`${data}-${idx}`}>{data}<button onClick={handleFilter(idx)}>X</button></li>)}
+      <div className="justify-content-center">
+            <h1 id="tittle">To Do List!</h1>
+            <input id="input" onChange={hanldeChange} value={todo} />
+            <Button variant="primary" id="addBtn" onClick={handleClick}>Add</Button>
+            <ListGroup>
+              <div>
+                {todos.map((data, idx) => <ListGroup.Item key={`${data}-${idx}`}>{data}<CloseButton id="closeBtn" onClick={handleFilter(idx)} /></ListGroup.Item>)}
               </div>
-            </Stack>
+              <div id="itemsQuantity">
+                <p>{items +" item left"}</p>
+              </div>
+            </ListGroup>
           
       </div>
   );
-
-
 }
 
 
